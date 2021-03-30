@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Agregamos el framework Bootstrap para simplificarnos el estilo de la visualización.-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Agregamos también el framework vue.js como hacíamos con JQuery (referenciando el código desde la nube)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h4 v-if="!visualizar">{{ message }}</h4>
+      <h1 v-text="message" v-if="visualizar"></h1>
+      <!--<button class="btn-primary" v-on:click="alternar">Alternar</button>-->
+      <button class="btn-primary" @click="alternar">Alternar</button>
+    </div>
+  </body>
+</html>
+
+<script>
+  // vue
+  var miVue = new Vue({
+    el: '#app',
+    data: {
+      message: 'NT2',
+      visualizar: true
+    },
+    methods: {
+      alternar(){
+        this.visualizar = !this.visualizar
+      }
+    }
+  })
+</script>
