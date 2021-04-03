@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Agregamos el framework Bootstrap para simplificarnos el estilo de la visualización.-->
+    <!-- Agregamos el framework Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <!-- Agregamos también el framework vue.js como hacíamos con JQuery (referenciando el código desde la nube)-->
+    <!-- Agregamos también el framework vue.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
   </head>
   <body>
     <div id="app">
-      <h4 v-if="!visualizar">{{ message }}</h4>
-      <h1 v-text="message" v-if="visualizar"></h1>
-      <!--<button class="btn-primary" v-on:click="alternar">Alternar</button>-->
-      <button class="btn-primary" @click="alternar">Alternar</button>
+      <div class="p-1">
+        <h4 v-if="!visualizar">{{ message }}</h4>
+        <h1 v-text="message" v-if="visualizar"></h1>
+        <!--<button class="btn-primary" v-on:click="alternar">Alternar</button>-->
+        <button class="btn-primary" @click="alternar">Alternar</button>
+      </div>
+
+      <div class="p-1">
+        <input v-model="ingreso" placeholder="Escriba su mensaje">
+        <button class="btn-secondary" @click="agregarMensajeFecha">Agregar {{ ingreso }}</button>
+      </div>
+  
+      <div class="p-1">
+        <p v-for="mensaje in mensajes">{{ mensaje }}</p>
+      </div>
     </div>
   </body>
 </html>
@@ -24,12 +35,21 @@
     el: '#app',
     data: {
       message: 'NT2',
-      visualizar: true
+      visualizar: true,
+      ingreso : "",
+      mensajes: []
     },
     methods: {
       alternar(){
         this.visualizar = !this.visualizar
+      },
+      agregarMensajeFecha(){
+        if(this.ingreso != "")
+          this.mensajes.push(`${ this.ingreso } - ${ new Date().toLocaleString() }`)
       }
+    },
+    created(){
+      this.mensajes.push("Mensajes ingresados:")
     }
   })
 </script>
