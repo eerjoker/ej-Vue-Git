@@ -19,12 +19,21 @@
 
       <div class="p-1">
         <input v-model="ingreso" placeholder="Escriba su mensaje">
-        <button class="btn-secondary" @click="agregarMensajeFecha">Agregar {{ ingreso }}</button>
+        <button class="btn-secondary" @click="agregarMensajeFecha">Agregar {{ ingreso }} con fecha</button>
+        <button class="btn-secondary" @click="agregarMensaje">Agregar {{ ingreso }}</button>
       </div>
   
       <div class="p-1">
-        <p v-for="mensaje in mensajes">{{ mensaje }}</p>
+        <p v-for="mensaje in mensajes" :key="mensaje">{{ mensaje }}</p>
       </div>
+
+      <div>
+        <button class="btn-secondary" @click="cambiarMensaje">Cambiar primer mensaje</button>
+        <p>Propiedades Computadas:</p>
+        <p>Cantidad de mensajes: {{ cantidadMensajes }}</p>
+        <p v-bind:title="aclaracion">El primer mensaje tiene {{ cantidadCaracteresPrimerMensaje }} caracteres</p>
+      </div>
+      
     </div>
   </body>
 </html>
@@ -37,7 +46,8 @@
       message: 'NT2',
       visualizar: true,
       ingreso : "",
-      mensajes: []
+      mensajes: [],
+      aclaracion: 'Yo solo cambio cuando cambia el array directo, no sus elementos.',
     },
     methods: {
       alternar(){
@@ -46,6 +56,22 @@
       agregarMensajeFecha(){
         if(this.ingreso != "")
           this.mensajes.push(`${ this.ingreso } - ${ new Date().toLocaleString() }`)
+      },
+      agregarMensaje(){
+        if(this.ingreso != "")
+          this.mensajes.push(this.ingreso)
+      },
+      cambiarMensaje(){
+        this.mensajes[0] = "Hola"
+        alert(`El primer mensaje se ha cambiado. Ahora tiene ${this.mensajes[0].length} caracteres.\nPero la propiedad computada no lo detecta.`);
+      }
+    },
+    computed: {
+      cantidadMensajes(){
+        return this.mensajes.length
+      },
+      cantidadCaracteresPrimerMensaje(){
+        return this.mensajes[0].length
       }
     },
     created(){
